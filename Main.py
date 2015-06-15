@@ -12,7 +12,7 @@ if __name__ == "__main__":
 	print("Go outside ? ([o]/n)")
 	outsideInput = input()
 	
-	crawler = WebCrawler(urlInput, (input() == 'n') ? False : True, depthInput)
+	crawler = WebCrawler(urlInput, False if input() == 'n' else True, depthInput)
 	crawler.start()
 
 	print("Dictionary : ", crawler.dictionary)
