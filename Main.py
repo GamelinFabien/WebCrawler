@@ -1,4 +1,4 @@
-__author__ = 'Ismaïl NGUYEN'
+__author__ = 'Fabien GAMELIN, Ismaïl NGUYEN, Bruno VACQUEREL'
 import WebCrawler
 
 if __name__ == "__main__":
