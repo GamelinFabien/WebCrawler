@@ -1,27 +1,27 @@
+"""Main module to call WebCrawler"""
 __author__ = 'Fabien GAMEIN, Ismail NGUYEN, Bruno VACQUEREL'
 from WebCrawler import WebCrawler
 
 if __name__ == "__main__":
-
     print "URL : "
-    url = raw_input()
+    URL = raw_input()
 
-    print "Depth : "
-    depth = raw_input()
+    print "Depth : ([2])"
+    DEPTH = raw_input()
 
     print "Go outside ? ([o]/n)"
 
-    crawler = WebCrawler(url, depth, False if raw_input() == 'n' else True)
-    crawler.crawl()
+    CRAWLER = WebCrawler(URL, DEPTH, False if raw_input() == 'n' else True)
+    CRAWLER.crawl()
 
-    print("Dictionary : ", crawler.dictionary)
+    print("Dictionary : ", CRAWLER.dictionary)
 
     print "Save the crawling ? (o/[n]) : "
     if raw_input() == 'o':
         print "Folder : "
-    crawler.save(raw_input())
+    CRAWLER.save(raw_input())
 
     print "Charge the crawling ? (o/[n]) : "
     if raw_input() == 'o':
         print "Folder : "
-    crawler.load(raw_input())
+    CRAWLER.load(raw_input())
