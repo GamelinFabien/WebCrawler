@@ -18,9 +18,9 @@ if __name__ == "__main__":
         URL = "http://www.nguyenismail.com/"
     
     for o, a in opts:
-        if o == "-d":
+        if o in ("-d", "-depth"):
             DEPTH = int(a)
-        elif o == "-o":
+        elif o in ("-o", "-outside"):
             GO_OUTSIDE = True
         else:
             print "Error : -d for depth, -o for go_outside"
