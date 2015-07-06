@@ -5,7 +5,7 @@ from WebCrawler import WebCrawler
 
 if __name__ == "__main__":
     try:
-        opts, args = getopt.getopt(sys.argv[2:], "d:o", )
+        opts, args = getopt.getopt(sys.argv[2:], "d:o", ["depth=", "outside"])
     except getopt.GetoptError as err:
         print err
         sys.exit(2)
