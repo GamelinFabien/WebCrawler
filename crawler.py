@@ -1,23 +1,31 @@
 """Main module to call WebCrawler"""
-__author__ = 'Fabien GAMEIN, Ismail NGUYEN, Bruno VACQUEREL'
+__author__ = "Fabien GAMEIN, Ismail NGUYEN, Bruno VACQUEREL"
+import getopt, sys
 from WebCrawler import WebCrawler
 
 if __name__ == "__main__":
-    print "URL : "
-    URL = raw_input()
+    try:
+        opts, args = getopt.getopt(sys.argv[2:], "d:o", )
+    except getopt.GetoptError as err:
+        print err
+        sys.exit(2)
+
+    GO_OUTSIDE = False
+    DEPTH = 2
+    
+    URL = str(sys.argv[1])
     if URL == '':
         URL = "http://www.nguyenismail.com/"
-
-    print "Depth : ([2])"
-    DEPTH = raw_input()
-    if DEPTH == '' or not DEPTH.isdigit():
-        DEPTH = 2
-    else:
-        DEPTH = int(DEPTH)
-
-    print "Go outside ? ([o]/n)"
-
-    CRAWLER = WebCrawler(URL, DEPTH, False if raw_input() == 'n' else True)
+    
+    for o, a in opts:
+        if o == "-d":
+            DEPTH = int(a)
+        elif o == "-o":
+            GO_OUTSIDE = True
+        else:
+            print "Error : -d for depth, -o for go_outside"
+     
+    CRAWLER = WebCrawler(URL, DEPTH, GO_OUTSIDE)
     CRAWLER.crawl()
 
     print("Dictionary : ", CRAWLER.dictionary)
