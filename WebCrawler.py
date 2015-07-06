@@ -13,19 +13,23 @@ class WebCrawler(object):
     url = ''
     go_outside = False
     depth = 0
+    input_dictionary = None
+    keyword = None
+    output = None
 
-    def __init__(self, url='http://www.nguyenismail.com/', depth=2, go_outside=True):
+    def __init__(self, url, depth=2 go_outside=True, output):
         """Initialisation des variables globales"""
         self.url = url
         self.go_outside = go_outside
         self.depth = depth
-        print "profondeur donne est %d" % depth
+        self.output = output
 
-
+    def __init__(self, input_dictionary, keyword):
+        self.input_dictionary = input_dictionary
+        self.keyword = keyword
+        
     def extract(self):
         """Extraction des données de l'url"""
-        print "l'url prsente est %s" % self.url
-        print "profondeur percu %d" % self.depth
         req = requests.get("http://" + self.url).text
         soup = BeautifulSoup(req)
         dictionary = {}
@@ -67,7 +71,7 @@ class WebCrawler(object):
                 return
 
         if self.go_outside:
-            print "Checking base domain..."
+            print "Check if local domain"
             domain_regex = re.findall("//([^/]*)", self.url)
             if domain_regex:
                 if domain_regex[0] != self.url:
@@ -95,16 +99,21 @@ class WebCrawler(object):
             self.dictionary[compteur] = k
             compteur += 1
 
-    def save(self, path="results"):
+    def save(self):
         """Sauvegarde des resultats"""
         for j in range(0, len(self.dictionary)):
             self.name = re.sub(r"([\/\.:#]*)", '', self.dictionary[j])
-            file_object = open(path + "//" + self.name + ".json", "w")
+            file_object = open(self.output + "//" + self.name + ".json", "w")
             file_object.write(self.dictionary[j])
             file_object.close()
 
-    def load(self, path):
+    def load(self):
         """Chargement des resultats"""
-        print path
-        print self.url
+        list_url = []
+        file_object = open(self.input_dictionary)
+        # lire le contenu de file_object
+        # parser et comparer avec self.keyword
+        # si self.keyboard apparait dans le title, description, ou mots keywords du dictionaire de l'url
+        # ajouter cet url à list_url => list_url.append(url_found)
+        file_object.close()
 

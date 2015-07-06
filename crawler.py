@@ -5,13 +5,14 @@ from WebCrawler import WebCrawler
 
 if __name__ == "__main__":
     try:
-        opts, args = getopt.getopt(sys.argv[2:], "d:o", ["depth=", "outside"])
+        opts, args = getopt.getopt(sys.argv[2:], "d:o:u:", ["depth=", "outside", "output="])
     except getopt.GetoptError as err:
         print err
         sys.exit(2)
 
     GO_OUTSIDE = False
     DEPTH = 2
+    OUTPUT = "results"
     
     URL = str(sys.argv[1])
     if URL == '':
@@ -22,10 +23,12 @@ if __name__ == "__main__":
             DEPTH = int(a)
         elif o in ("-o", "-outside"):
             GO_OUTSIDE = True
+        elif o in ("-u", "-output"):
+            OUTPUT = a
         else:
             print "Error : -d for depth, -o for go_outside"
      
-    CRAWLER = WebCrawler(URL, DEPTH, GO_OUTSIDE)
+    CRAWLER = WebCrawler(URL, DEPTH, GO_OUTSIDE, OUTPUT)
     CRAWLER.crawl()
 
     print("Dictionary : ", CRAWLER.dictionary)
