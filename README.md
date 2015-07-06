@@ -7,7 +7,9 @@
 
 
 ##Description
-blablabla
+Le WebCrawler permet d'indexer automatiquement les pages Web à partir d'un URL donné.
+Il va parcourir tous les liens présents sur chaque page et les parcourir un à un.
+Ces liens seront ensuite stockés sous format JSON.
 
 
 ##Modules
