@@ -28,34 +28,6 @@ class WebCrawler(object):
         #self.input_dictionary = input_dictionary
         #self.keyword = keyword
 
-    def extract(self):
-        """Extraction des données de l'url"""
-        req = requests.get("http://" + self.url).text
-        soup = BeautifulSoup(req)
-        dictionary = {}
-
-        dictionary["Title"] = soup.find("title")
-
-        description = soup.findAll("meta", attrs={"name": "description"})
-        if description == []:
-            dictionary['Description'] = "No description"
-        else:
-            dictionary['Description'] = description[0]["content"].encode("utf-8")
-
-        keywords = soup.findAll("meta", attrs={"name": "keywords"})
-        if keywords == []:
-            dictionary["Keywords"] = "No description"
-        else:
-            dictionary["Keywords"] = keywords[0]["content"].encode("utf-8")
-
-        dictionary['Links'] = []
-
-        for link in soup.findAll("a", attrs={"href":True}):
-            if link["href"].find("http://") > 0 or link["href"].find("www.") > 0:
-                dictionary['Links'].append(link["href"])
-
-        return dictionary
-
     def crawl(self, depth=2):
         """Parcours des urls"""
         compteur = 0
@@ -98,6 +70,34 @@ class WebCrawler(object):
         for k in self.nodes:
             self.dictionary[compteur] = k
             compteur += 1
+
+    def extract(self):
+        """Extraction des données de l'url"""
+        req = requests.get("http://" + self.url).text
+        soup = BeautifulSoup(req)
+        dictionary = {}
+
+        dictionary["Title"] = soup.find("title")
+
+        description = soup.findAll("meta", attrs={"name": "description"})
+        if description == []:
+            dictionary['Description'] = "No description"
+        else:
+            dictionary['Description'] = description[0]["content"].encode("utf-8")
+
+        keywords = soup.findAll("meta", attrs={"name": "keywords"})
+        if keywords == []:
+            dictionary["Keywords"] = "No description"
+        else:
+            dictionary["Keywords"] = keywords[0]["content"].encode("utf-8")
+
+        dictionary['Links'] = []
+
+        for link in soup.findAll("a", attrs={"href":True}):
+            if link["href"].find("http://") > 0 or link["href"].find("www.") > 0:
+                dictionary['Links'].append(link["href"])
+
+        return dictionary
 
     def save(self):
         """Sauvegarde des resultats"""
