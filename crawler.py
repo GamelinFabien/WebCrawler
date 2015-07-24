@@ -34,7 +34,7 @@ if __name__ == "__main__":
     if DEPTH == '':
         DEPTH = 2
     if OUTPUT == '':
-        OUTPUT = "pipi"
+        OUTPUT = "results"
 
     CRAWLER = WebCrawler(URL, DEPTH, GO_OUTSIDE, OUTPUT)
     CRAWLER.crawl()
@@ -47,4 +47,4 @@ if __name__ == "__main__":
 
     print "Charge the crawling ? (y/[n]) : "
     if raw_input() == 'y':
-        CRAWLER.load()
+        print("Dictionary: ", CRAWLER.load())

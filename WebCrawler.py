@@ -111,6 +111,8 @@ class WebCrawler(object):
         matches = []
         for item in os.listdir(self.output):
             if os.path.isfile(os.path.join(self.output, item)):
-                matches.append(json.load(open(self.output + '/' + item)))
+                file_object = open(self.output + '/' + item)
+                matches.append(json.load(file_object))
+                file_object.close()
         return matches
 
