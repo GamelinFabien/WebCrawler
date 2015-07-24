@@ -34,25 +34,20 @@ class WebCrawler(object):
         compteur = 0
 
         if self.url:
-            print "Computing base domain ..."
             domain_regex = re.findall("//([^/]*)", self.url)
             if domain_regex:
-                print "Base domain : %s" % domain_regex[0]
                 self.url = domain_regex[0]
             else:
                 print "Error: Bad url (Expected url format : http://site.com/)"
                 return
 
         if self.go_outside:
-            print "Check if local domain"
             domain_regex = re.findall("//([^/]*)", self.url)
             if domain_regex:
                 if domain_regex[0] != self.url:
-                    print "Different domain ! Skipping."
                     return
 
         if self.url in self.nodes:
-            print "Node : %s already crawled." % self.url
             return
 
         print "Crawling : %s" % self.url
@@ -61,12 +56,10 @@ class WebCrawler(object):
 
         if url_data and "Links" in url_data:
             for k in url_data["Links"]:
-                print "Found link : %s" % k
+                #print "Found link : %s" % k
                 if self.depth >= depth:
                     self.url = k
                     self.crawl(depth + 1)
-                else:
-                    print "Max depth."
 
         for k in self.nodes:
             self.dictionary[compteur] = k
@@ -116,10 +109,8 @@ class WebCrawler(object):
     def load(self):
         """Chargement des resultats"""
         matches = []
-        for root, dirname, filenames in os.walk(self.output):
-            for filename in filenames:
-                if filename.endswith(".json"):
-                    matches.append(json.load(open(dirname + '/' + filename)))
-        print matches
+        for item in os.listdir(self.output):
+            if os.path.isfile(os.path.join(self.output, item)):
+                matches.append(json.load(open(self.output + '/' + item)))
         return matches
 
