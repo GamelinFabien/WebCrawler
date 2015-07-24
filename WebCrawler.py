@@ -115,12 +115,11 @@ class WebCrawler(object):
 
     def load(self):
         """Chargement des resultats"""
-        #list_url = []
         matches = []
         for root, dirname, filenames in os.walk(self.output):
             for filename in filenames:
                 if filename.endswith(".json"):
-                    matches.append(json.load(open(self.output + '/' + filename)))
+                    matches.append(json.load(open(dirname + '/' + filename)))
         print matches
         return matches
 

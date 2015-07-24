@@ -16,6 +16,8 @@ Ces liens seront ensuite stockés sous format JSON.
 - re
 - request
 - bs4
+- json
+- os
 
 
 ##Functions
