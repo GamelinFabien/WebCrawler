@@ -2,13 +2,13 @@
 """WebCrawler - ESGI 3A AL 2014/2015"""
 __author__ = 'Fabien GAMELIN, Ismail NGUYEN, Bruno VACQUEREL'
 import re
+import json
 import requests
 from bs4 import BeautifulSoup
 
 class WebCrawler(object):
     """Classe permettant de crawler une URL fournie"""
     nodes = []
-    name = {}
     dictionary = {}
     url = ''
     go_outside = False
@@ -56,7 +56,7 @@ class WebCrawler(object):
 
         print "Crawling : %s" % self.url
         url_data = self.extract()
-        self.nodes.append(self.url)
+        self.nodes.append(url_data)
 
         if url_data and "Links" in url_data:
             for k in url_data["Links"]:
@@ -74,10 +74,12 @@ class WebCrawler(object):
     def extract(self):
         """Extraction des données de l'url"""
         req = requests.get("http://" + self.url).text
+        
         soup = BeautifulSoup(req)
         dictionary = {}
 
-        dictionary["Title"] = soup.find("title")
+        dictionary["Url"] = self.url
+        dictionary["Title"] = soup.find("title").text
 
         description = soup.findAll("meta", attrs={"name": "description"})
         if description == []:
@@ -101,10 +103,12 @@ class WebCrawler(object):
 
     def save(self):
         """Sauvegarde des resultats"""
-        for j in range(0, len(self.dictionary)):
-            self.name = re.sub(r"([\/\.:#]*)", '', self.dictionary[j])
-            file_object = open(self.output + "//" + self.name + ".json", "w")
-            file_object.write(self.dictionary[j])
+        if not os.path.isdir(self.output.):
+            os.makedirs(self.output)
+        for j in range(0, len(self.nodes)):
+            name = re.sub(r"([\/\.:#]*)", '', self.dictionary[j]["Url"])
+            file_object = open(self.output + '/' + name + ".json", "w")
+            json.dump(self.nodes[j], file_object, indent=4)
             file_object.close()
 
     def load(self):
