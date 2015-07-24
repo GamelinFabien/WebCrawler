@@ -17,17 +17,17 @@ class WebCrawler(object):
     keyword = None
     output = None
 
-    def __init__(self, url, depth=2 go_outside=True, output):
+    def __init__(self, url, depth=2, go_outside=True, output="results"):
         """Initialisation des variables globales"""
         self.url = url
         self.go_outside = go_outside
         self.depth = depth
         self.output = output
 
-    def __init__(self, input_dictionary, keyword):
-        self.input_dictionary = input_dictionary
-        self.keyword = keyword
-        
+    #def __init__(self, input_dictionary, keyword):
+        #self.input_dictionary = input_dictionary
+        #self.keyword = keyword
+
     def extract(self):
         """Extraction des données de l'url"""
         req = requests.get("http://" + self.url).text
@@ -109,11 +109,12 @@ class WebCrawler(object):
 
     def load(self):
         """Chargement des resultats"""
-        list_url = []
+        #list_url = []
         file_object = open(self.input_dictionary)
         # lire le contenu de file_object
         # parser et comparer avec self.keyword
-        # si self.keyboard apparait dans le title, description, ou mots keywords du dictionaire de l'url
+        # si self.keyboard apparait dans le title, description,
+        #ou mots keywords du dictionaire de l'url
         # ajouter cet url à list_url => list_url.append(url_found)
         file_object.close()
 
