@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     GO_OUTSIDE = False
     DEPTH = 2
-    OUTPUT = "results"
+    OUTPUT = ""
 
     URL = str(sys.argv[1])
     if URL == '':
@@ -25,6 +25,7 @@ if __name__ == "__main__":
             GO_OUTSIDE = True
         elif o in ("-u", "-output"):
             OUTPUT = a
+            print("aaaaa : ", a)
         else:
             print "Error : -d for depth, -o for go_outside, -u for output"
 
@@ -33,12 +34,12 @@ if __name__ == "__main__":
     if DEPTH == '':
         DEPTH = 2
     if OUTPUT == '':
-        OUTPUT = "results"
+        OUTPUT = "pipi"
 
     CRAWLER = WebCrawler(URL, DEPTH, GO_OUTSIDE, OUTPUT)
     CRAWLER.crawl()
 
-    print("Dictionary : ", CRAWLER.dictionary)
+    #print("Dictionary : ", CRAWLER.dictionary)
 
     print "Save the crawling ? (y/[n]) : "
     if raw_input() == 'y':

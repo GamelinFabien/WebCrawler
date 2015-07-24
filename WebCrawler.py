@@ -3,6 +3,7 @@
 __author__ = 'Fabien GAMELIN, Ismail NGUYEN, Bruno VACQUEREL'
 import re
 import json
+import os
 import requests
 from bs4 import BeautifulSoup
 
@@ -17,7 +18,7 @@ class WebCrawler(object):
     keyword = None
     output = None
 
-    def __init__(self, url, depth=2, go_outside=True, output="results"):
+    def __init__(self, url, depth=2, go_outside=True, output="resutlts"):
         """Initialisation des variables globales"""
         self.url = url
         self.go_outside = go_outside
@@ -74,7 +75,7 @@ class WebCrawler(object):
     def extract(self):
         """Extraction des données de l'url"""
         req = requests.get("http://" + self.url).text
-        
+
         soup = BeautifulSoup(req)
         dictionary = {}
 
@@ -103,8 +104,9 @@ class WebCrawler(object):
 
     def save(self):
         """Sauvegarde des resultats"""
-        if not os.path.isdir(self.output.):
+        if not os.path.isdir(self.output):
             os.makedirs(self.output)
+
         for j in range(0, len(self.nodes)):
             name = re.sub(r"([\/\.:#]*)", '', self.dictionary[j]["Url"])
             file_object = open(self.output + '/' + name + ".json", "w")
@@ -114,11 +116,11 @@ class WebCrawler(object):
     def load(self):
         """Chargement des resultats"""
         #list_url = []
-        file_object = open(self.input_dictionary)
-        # lire le contenu de file_object
-        # parser et comparer avec self.keyword
-        # si self.keyboard apparait dans le title, description,
-        #ou mots keywords du dictionaire de l'url
-        # ajouter cet url à list_url => list_url.append(url_found)
-        file_object.close()
+        matches = []
+        for root, dirname, filenames in os.walk(self.output):
+            for filename in filenames:
+                if filename.endswith(".json"):
+                    matches.append(json.load(open(self.output + '/' + filename)))
+        print matches
+        return matches
 
