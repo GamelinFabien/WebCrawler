@@ -22,7 +22,7 @@ Ces liens seront ensuite stockés sous format JSON.
 
 ##Functions
 
-$> crawler.py <your_url> <depth:optional> <go_outside:optional> <output_folder:optional>
+$> crawler.py your_url depth(optional) go_outside(optional) output_folder(optional)
 
 - your_url : Url (String, Expected format: http://site.com)
 - depth : Integer
